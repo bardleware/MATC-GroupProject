@@ -1,0 +1,31 @@
+{
+  "users": [
+    {
+      "name": "Micheal Johnson",
+      "age": 27,
+      "gender": "male",
+      "dob": "7/18/90",
+      "dateJoined": "8/17/17",
+      "friends": [
+        {
+          "name": "Maria Nelson",
+          "userPage": "http://fakeurl.co/addressOfUser",
+          "recommendedMovies": []
+        }
+      ],
+      "movies":[
+        {
+          "title": "The Great Wall",
+          "rating": "4 stars",
+          "review": ""
+        },
+        {
+          "title": "Superman",
+          "rating": "3 stars",
+          "review": ""
+
+        }
+      ]
+    }
+  ]
+}
