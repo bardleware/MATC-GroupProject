@@ -25,11 +25,7 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-
-  login(){
-
-
-  }
+  login(){}
 
   itemSelected($event, data){
     this.navCtrl.push(UserHomePage);
