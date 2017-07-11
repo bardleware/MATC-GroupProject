@@ -10,13 +10,19 @@ export class MovieService {
   //Unique Movie Url has https://api.themoviedb.org/3/movie/{movie_id}?api_key={apiKey}
   private specificMovieUrl = "https://api.themoviedb.org/3/movie/"
   private discoveryUrl = "https://api.themoviedb.org/3/discover/movie";
+  private genreListUrl = "https://api.themoviedb.org/3/genre/movie/list"
   private apiKey: string = "9d1d4c863da80cfbbfdfc5d7b3c456b0";
 
 
   constructor(private http: Http) {}
 
-  discover(list?: QueryInfo[]): Observable<any> {
+  getMovie(movieId: string | number) {
+    let url = this.genreListUrl + "?api_key="+this.apiKey + "&language=en-US";
+    return this.http.get(url)
+      .map( (response: Response) => {return response.json()})
+  }
 
+  discover(list?: QueryInfo[]): Observable<any> {
     return this.http.get(this.discoveryUrl+"?api_key="+this.apiKey+"&language=en-US"+this.generateUrl())
       .map( (response: Response) => {return response.json()})
   }
