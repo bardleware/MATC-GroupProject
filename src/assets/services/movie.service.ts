@@ -16,34 +16,86 @@ export class MovieService {
 
   constructor(private http: Http) {}
 
-  getMovie(movieId: string | number) {
-    let url = this.genreListUrl + "?api_key="+this.apiKey + "&language=en-US";
+  getMovie(movieId: string | number): Observable<any> {
+    let url = this.specificMovieUrl + movieId + "?api_key="+this.apiKey + "&language=en-US";
     return this.http.get(url)
       .map( (response: Response) => {return response.json()})
   }
 
-  discover(list?: QueryInfo[]): Observable<any> {
-    return this.http.get(this.discoveryUrl+"?api_key="+this.apiKey+"&language=en-US"+this.generateUrl())
+  discoverMovies(list?: QueryInfo[]): Observable<any> {
+    let url = this.discoveryUrl + "?api_key=" + this.apiKey + "&language=en-US&include_adult=false&include_video=false"
+    let buildUrl = url + this.generateUrl(list);
+    return this.http.get(buildUrl)
+      .map( (response: Response) => {return response.json()})
+  }
+
+  getGenreList(): Observable<any> {
+    let url = this.genreListUrl + "?api_key=" + this.apiKey + "&language=en-US";
+    return this.http.get(url)
       .map( (response: Response) => {return response.json()})
   }
 
   private generateUrl(list?: QueryInfo[]): string {
     let buildString = "";
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].key == "year") {
-        buildString += "&year="+list[i].value;
-      }
-      if (list[i].key == "genres") {
-        buildString += "&with_genres="
-        for (let j = 0; j < list[i].value.length; j++) {
-          if (j != 0) {
-            buildString += "%2C"
-          }
-          buildString += ""+list[i].value[j]
-        }
+    if (list && list.length > 0) {
+      for (let i = 0; i < list.length; i++) {
+        buildString += this.addQuery(list[i].key, list[i].value);
       }
     }
     return buildString;
   }
 
+  private addQuery(key: string, value: any): string {
+    let queryString = "";
+    if (key == "sort_by") {
+      queryString += "&sort_by=" + value;
+    }
+    else if (key == "page") {
+      queryString += "&page=" + value;
+    }
+    else if (key == "year") {
+      queryString += "&year=" + value;
+    }
+    else if (key == "with_genres") {
+      queryString += "&with_genres=" + value.reduce(function (newStr, strFrag, ind) {
+        if (ind != 0) {
+          newStr += "%2C";
+        }
+        return newStr + strFrag;
+      });
+      // for (let i = 0; i < value.length; i++) {
+      //   if (i > 0) {
+      //     queryString += "%2C";
+      //   }
+      //   queryString += value[i];
+      // }
+    }
+    else if (key == "without_genres") {
+      queryString += "&without_genres=" + value.reduce(function (newStr, strFrag, ind) {
+          if (ind != 0) {
+            newStr += "%2C";
+          }
+          return newStr + strFrag;
+        });
+      // for (let i = 0; i < value.length; i++) {
+      //   if (i > 0) {
+      //     queryString += "%2C";
+      //   }
+      //   queryString += value[i];
+      // }
+    }
+    else if (key == "release_date.gte") {
+      queryString += "&release_date.gte=" + value;
+    }
+    else if (key == "release_date.lte") {
+      queryString += "&release_date.lte=" + value;
+    }
+    else if (key == "primary_release_year") {
+      queryString += "&primary_release_year=" + value;
+    }
+    else {
+      return "";
+    }
+    return queryString;
+  }
 }
