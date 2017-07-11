@@ -57,22 +57,32 @@ export class MovieService {
       queryString += "&year=" + value;
     }
     else if (key == "with_genres") {
-      queryString += "&with_genres=";
-      for (let i = 0; i < value.length; i++) {
-        if (i > 0) {
-          queryString += "%2C";
+      queryString += "&with_genres=" + value.reduce(function (newStr, strFrag, ind) {
+        if (ind != 0) {
+          newStr += "%2C";
         }
-        queryString += value[i];
-      }
+        return newStr + strFrag;
+      });
+      // for (let i = 0; i < value.length; i++) {
+      //   if (i > 0) {
+      //     queryString += "%2C";
+      //   }
+      //   queryString += value[i];
+      // }
     }
     else if (key == "without_genres") {
-      queryString += "&without_genres=";
-      for (let i = 0; i < value.length; i++) {
-        if (i > 0) {
-          queryString += "%2C";
-        }
-        queryString += value[i];
-      }
+      queryString += "&without_genres=" + value.reduce(function (newStr, strFrag, ind) {
+          if (ind != 0) {
+            newStr += "%2C";
+          }
+          return newStr + strFrag;
+        });
+      // for (let i = 0; i < value.length; i++) {
+      //   if (i > 0) {
+      //     queryString += "%2C";
+      //   }
+      //   queryString += value[i];
+      // }
     }
     else if (key == "release_date.gte") {
       queryString += "&release_date.gte=" + value;
