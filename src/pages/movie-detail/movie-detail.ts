@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {MovieService} from "../../assets/services/movie.service";
 
 /**
  * Generated class for the MovieDetailPage page.
@@ -14,11 +15,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MovieDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public movieService: MovieService
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MovieDetailPage');
+    this.movieService.getMovie(76341).subscribe(data => console.log(data));
+
   }
 
 }

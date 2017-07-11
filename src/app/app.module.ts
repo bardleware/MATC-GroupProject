@@ -16,6 +16,7 @@ import {UserDetailPage} from "../pages/user-detail/user-detail";
 import {UserHomePage} from "../pages/user-home/user-home";
 import {SearchPage} from "../pages/search/search";
 import {FalseUserService} from "../assets/services/falseUser.service"
+import {MovieService} from "../assets/services/movie.service";
 
 //Angular Fire2 Settings
 export const firebaseConfig = {
@@ -59,7 +60,8 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     FalseUserService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    MovieService
   ]
 })
 export class AppModule {}
