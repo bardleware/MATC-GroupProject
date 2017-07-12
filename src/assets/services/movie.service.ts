@@ -12,6 +12,8 @@ export class MovieService {
   private discoveryUrl = "https://api.themoviedb.org/3/discover/movie";
   private genreListUrl = "https://api.themoviedb.org/3/genre/movie/list";
   private apiKey: string = "9d1d4c863da80cfbbfdfc5d7b3c456b0";
+  private baseImageUrl = "https://image.tmdb.org/t/p/";
+  private posterSizes = ["w92", "w154", "w300"];
 
 
   constructor(private http: Http) {}
@@ -23,7 +25,7 @@ export class MovieService {
   }
 
   discoverMovies(list?: QueryInfo[]): Observable<any> {
-    let url = this.discoveryUrl + "?api_key=" + this.apiKey + "&language=en-US&include_adult=false&include_video=false"
+    let url = this.discoveryUrl + "?api_key=" + this.apiKey + "&language=en-US&include_adult=false&include_video=false";
     let buildUrl = url + this.generateUrl(list);
     return this.http.get(buildUrl)
       .map( (response: Response) => {return response.json()})
@@ -33,6 +35,19 @@ export class MovieService {
     let url = this.genreListUrl + "?api_key=" + this.apiKey + "&language=en-US";
     return this.http.get(url)
       .map( (response: Response) => {return response.json()})
+  }
+
+  getPosterUrl(imageUrl: string, width?: number): string {
+    let size: string = "";
+    if (width) {
+      if (width > 500) {
+        size = "w500";
+      }
+    }
+    else {
+      size = this.posterSizes[2];
+    }
+    return this.baseImageUrl + size + imageUrl;
   }
 
   private generateUrl(list?: QueryInfo[]): string {
