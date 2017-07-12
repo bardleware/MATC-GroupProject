@@ -13,6 +13,8 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content *ngIf="posterURL" padding>
+
+  <img src={{posterURL}} alt="">
 
 </ion-content>

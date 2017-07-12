@@ -15,6 +15,8 @@ import {MovieService} from "../../assets/services/movie.service";
 })
 export class MovieDetailPage {
 
+  public posterURL: string;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public movieService: MovieService
@@ -24,6 +26,7 @@ export class MovieDetailPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MovieDetailPage');
     this.movieService.getMovie(76341).subscribe(data => console.log(data));
+    this.posterURL = this.movieService.getPosterUrl("/kqjL17yufvn9OVLyXYpvtyrFfak.jpg", window.innerWidth);
 
   }
 
