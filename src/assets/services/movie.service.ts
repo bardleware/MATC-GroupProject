@@ -10,6 +10,7 @@ export class MovieService {
   //Unique Movie Url has https://api.themoviedb.org/3/movie/{movie_id}?api_key={apiKey}
   private specificMovieUrl = "https://api.themoviedb.org/3/movie/";
   private discoveryUrl = "https://api.themoviedb.org/3/discover/movie";
+  private searchUrl = "https://api.themoviedb.org/3/search/movie"
   private genreListUrl = "https://api.themoviedb.org/3/genre/movie/list";
   private apiKey: string = "9d1d4c863da80cfbbfdfc5d7b3c456b0";
   private baseImageUrl = "https://image.tmdb.org/t/p/";
@@ -19,7 +20,7 @@ export class MovieService {
   constructor(private http: Http) {}
 
   getMovie(movieId: string | number): Observable<any> {
-    let url = this.specificMovieUrl + movieId + "/credits" + "?api_key=" + this.apiKey + "&language=en-US";
+    let url = this.specificMovieUrl + movieId + "?api_key=" + this.apiKey + "&language=en-US&include_adult=false";
     return this.http.get(url)
       .map( (response: Response) => {return response.json()});
   }
@@ -31,8 +32,31 @@ export class MovieService {
       .map( (response: Response) => {return response.json()})
   }
 
+  searchMovies(query: string, list?: QueryInfo[]) {
+    let url = this.searchUrl + "?api_key=" + this.apiKey + "&language=en-US";
+    url += "query=" + query;
+    if (list) {
+      url += this.buildSearchQuery(list);
+    }
+    return this.http.get(url)
+      .map( (response: Response) => {return response.json()});
+  }
+
+  buildSearchQuery(list: QueryInfo[]): string {
+    let url = ""
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].key == "page") {
+        url += "&page="+list[i].value;
+      }
+      if (list[i].key == "year") {
+        url += "&year=" + list[i].value;
+      }
+    }
+    return url;
+  }
+
   getMovieCredits(movieId: string | number) {
-    let url = this.specificMovieUrl + movieId + "/images" + "?api_key" + this.apiKey;
+    let url = this.specificMovieUrl + movieId + "/credits" + "?api_key" + this.apiKey;
     return this.http.get(url)
       .map( (response: Response) => {return response.json()});
   }
