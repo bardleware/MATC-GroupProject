@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {MovieService} from "../../assets/services/movie.service";
 
 @Component({
   selector: 'page-list',
@@ -10,7 +11,11 @@ export class ListPage {
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public movieSearch: MovieService
+
+  ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
@@ -26,6 +31,13 @@ export class ListPage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
+  }
+  ionViewDidLoad() {
+    this.searchMovies("Mad Max")
+  }
+  searchMovies(title: string){
+    let results = this.movieSearch.searchMovies(title);
+    console.log(results);
   }
 
   itemTapped(event, item) {

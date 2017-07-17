@@ -19,8 +19,9 @@ import {FalseUserService} from "../assets/services/falseUser.service"
 import { firebaseConfig} from "./app.firebase.config";
 import {RegisterPage} from "../pages/register/register";
 import { AuthService } from '../providers/auth.service';
-
 import{GooglePlus} from '@ionic-native/google-plus';
+import {MovieService} from "../assets/services/movie.service";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -59,7 +60,8 @@ import{GooglePlus} from '@ionic-native/google-plus';
     FalseUserService,
     AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GooglePlus
+    GooglePlus,
+    MovieService
   ]
 })
 export class AppModule {}
