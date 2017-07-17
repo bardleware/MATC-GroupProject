@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import {HttpModule} from "@angular/http";
 import { AngularFireModule } from 'angularfire2';
-
+import{AngularFireAuthModule}from 'angularfire2/auth'
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -16,18 +16,11 @@ import {UserDetailPage} from "../pages/user-detail/user-detail";
 import {UserHomePage} from "../pages/user-home/user-home";
 import {SearchPage} from "../pages/search/search";
 import {FalseUserService} from "../assets/services/falseUser.service"
-import {MovieService} from "../assets/services/movie.service";
+import { firebaseConfig} from "./app.firebase.config";
+import {RegisterPage} from "../pages/register/register";
+import { AuthService } from '../providers/auth.service';
 
-//Angular Fire2 Settings
-export const firebaseConfig = {
-  apiKey: "AIzaSyAxlSSfMhul10KR5yVyiIP3PxvC95TRdJA",
-  authDomain: "matc-ionic-movies.firebaseapp.com",
-  databaseURL: "https://matc-ionic-movies.firebaseio.com",
-  projectId: "matc-ionic-movies",
-  storageBucket: "matc-ionic-movies.appspot.com",
-  messagingSenderId: "678663492397"
-};
-
+import{GooglePlus} from '@ionic-native/google-plus';
 @NgModule({
   declarations: [
     MyApp,
@@ -37,13 +30,16 @@ export const firebaseConfig = {
     MovieDetailPage,
     SearchPage,
     UserDetailPage,
-    UserHomePage
+    UserHomePage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    HttpModule
+    HttpModule,
+    AngularFireAuthModule,
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,14 +50,16 @@ export const firebaseConfig = {
     MovieDetailPage,
     SearchPage,
     UserDetailPage,
-    UserHomePage
+    UserHomePage,
+    RegisterPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     FalseUserService,
+    AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MovieService
+    GooglePlus
   ]
 })
 export class AppModule {}
