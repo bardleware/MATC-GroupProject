@@ -34,7 +34,9 @@ export class MovieService {
 
   searchMovies(query: string, list?: QueryInfo[]) {
     let url = this.searchUrl + "?api_key=" + this.apiKey + "&language=en-US";
-    url += "query=" + query;
+    url += "&query=" + query;
+    url += "&include_adult=false";
+    console.log(url);
     if (list) {
       url += this.buildSearchQuery(list);
     }

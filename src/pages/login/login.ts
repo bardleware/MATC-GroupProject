@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular'; 
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import{User} from '../../models/user';
 import{RegisterPage}from '../register/register';
 import{AngularFireAuth} from 'angularfire2/auth';
@@ -12,7 +12,7 @@ import { AuthService } from "../../providers/auth.service";
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
- 
+
 })
 export class LoginPage {
   AngularFireAuth=firebase.auth
@@ -33,13 +33,17 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
 
+  itemSelected($event, data){
+    this.navCtrl.push(UserHomePage);
+  }
+
     public signInWithGoogle(): void {
         this._auth.signInWithGoogle().then(() => this.onSignInSuccess());
     }
      private onSignInSuccess(): void {
         console.log("Google display name ", this._auth.displayName());
         this.navCtrl.push(UserHomePage);
-        
+
     }
 
 }

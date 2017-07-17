@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MovieDetailPage} from "../movie-detail/movie-detail";
 import {UserDetailPage} from "../user-detail/user-detail";
+import {MovieService} from "../../assets/services/movie.service";
 
 /**
  * Generated class for the SearchPage page.
@@ -16,11 +17,20 @@ import {UserDetailPage} from "../user-detail/user-detail";
 })
 export class SearchPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public movieSearch: MovieService
+              ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
+    this.searchMovies("Mad")
+  }
+
+  searchMovies(title: string){
+    let results = this.movieSearch.searchMovies(title).subscribe();
+    console.log(results);
   }
 
   myMovieSelected($event, data){
