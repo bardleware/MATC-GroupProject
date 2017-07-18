@@ -3,7 +3,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import {HttpModule} from "@angular/http";
 import { AngularFireModule } from 'angularfire2';
-import{AngularFireAuthModule}from 'angularfire2/auth'
+import{AngularFireAuthModule}from 'angularfire2/auth';
+import {AngularFireDatabase, AngularFireDatabaseModule} from "angularfire2/database";
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -21,6 +22,7 @@ import {RegisterPage} from "../pages/register/register";
 import { AuthService } from '../providers/auth.service';
 import{GooglePlus} from '@ionic-native/google-plus';
 import {MovieService} from "../assets/services/movie.service";
+import {UserService} from "../assets/services/user.service";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import {MovieService} from "../assets/services/movie.service";
     AngularFireModule.initializeApp(firebaseConfig),
     HttpModule,
     AngularFireAuthModule,
-
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,6 +60,8 @@ import {MovieService} from "../assets/services/movie.service";
     StatusBar,
     SplashScreen,
     FalseUserService,
+    UserService,
+    AngularFireDatabase,
     AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GooglePlus,

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import {LoginPage} from "../login/login";
 import {FalseUserService} from "../../assets/services/falseUser.service";
+import {UserService} from "../../assets/services/user.service";
 
 /**
  * Generated class for the HomePage page.
@@ -17,7 +18,7 @@ import {FalseUserService} from "../../assets/services/falseUser.service";
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userServ: FalseUserService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userServ: UserService) {
 
     window.localStorage.removeItem('currentuser');
     if(!this.isLoggedin()){
@@ -30,7 +31,9 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-    this.userServ.arrangeData();
+    let names = this.userServ.getNames().subscribe(data => console.log(data));
+    console.log(names);
+    // this.userServ.addName("Bruce Wayne");
   }
 
   itemSelected($event, data){
