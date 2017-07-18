@@ -17,6 +17,9 @@ import {MovieService} from "../../assets/services/movie.service";
 })
 export class SearchPage {
 
+  myInput: string;
+  movieList: any;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public movieSearch: MovieService
@@ -25,12 +28,18 @@ export class SearchPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
-    this.searchMovies("Mad")
+
+  }
+
+  searchForMovie(input: string){
+    this.movieSearch.searchMovies(input).subscribe(response => {
+      this.movieList = response;
+      console.log(this.movieList);
+    });
+
   }
 
   searchMovies(title: string){
-    let results = this.movieSearch.searchMovies(title).subscribe();
-    console.log(results);
   }
 
   myMovieSelected($event, data){
