@@ -19,7 +19,11 @@
   </ion-searchbar>
   <button ion-button full (click)="searchForMovie(myInput)">Search</button>
   <br>
-  <button ion-button full (click)="myMovieSelected($event, data)">Search for My Movie</button>
   <button ion-button full (click)="userSelected($event, data)">Search for User</button>
-  <button ion-button full (click)="movieSelected($event, data)">Search for Movie</button>
+
+  <ion-list>
+    <button ion-item *ngFor="let movie of movieList" (click)="itemSelected($event, movie.id)">
+      {{ movie.title }}
+    </button>
+  </ion-list>
 </ion-content>

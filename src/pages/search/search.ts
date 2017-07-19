@@ -33,10 +33,14 @@ export class SearchPage {
 
   searchForMovie(input: string){
     this.movieSearch.searchMovies(input).subscribe(response => {
-      this.movieList = response;
+      this.movieList = response.results;
       console.log(this.movieList);
     });
+  }
 
+  itemSelected(event, movieID){
+    console.log(movieID);
+    this.navCtrl.push(MovieDetailPage, movieID);
   }
 
   searchMovies(title: string){
