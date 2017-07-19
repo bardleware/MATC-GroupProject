@@ -8,7 +8,7 @@ export class UserService {
   users: FirebaseListObservable<any>;
   names: FirebaseListObservable<any>;
 
-  constructor(db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase) {
     db.app.auth().signInWithEmailAndPassword("cole2bass@gmail.com", "C0!eP!@y95");
     this.names = db.list("https://matc-ionic-movies.firebaseio.com/names");
     this.users = db.list("https://matc-ionic-movies.firebaseio.com/users/users");
@@ -19,6 +19,7 @@ export class UserService {
   }
 
   addNewUser(user) {
+    this.db.app.auth().createUserWithEmailAndPassword(user.email, user.password);
     this.users.push(user);
   }
 
