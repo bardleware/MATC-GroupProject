@@ -16,6 +16,9 @@ import {MovieService} from "../../assets/services/movie.service";
 export class MovieDetailPage {
 
   public posterURL: string;
+  public backdropURL: string;
+  public movie: any;
+
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -25,9 +28,25 @@ export class MovieDetailPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MovieDetailPage');
-    this.movieService.getMovie(76341).subscribe(data => console.log(data));
-    this.posterURL = this.movieService.getPosterUrl("/kqjL17yufvn9OVLyXYpvtyrFfak.jpg", window.innerWidth);
+    this.movieService.getMovie(this.navParams.data)
+      .subscribe(data => {
+        this.movie = data;
+        this.posterURL = this.movieService.getPosterUrl(this.movie.poster_path);
+        this.backdropURL = this.movieService.getPosterUrl(this.movie.backdrop_path);
+        console.log(this.posterURL);
+        console.log(this.backdropURL);
+      });
 
+  }
+  gotoWebsite(){
+    window.open(this.movie.homepage,"_blank");
+    console.log(this.movie.homepage);
+  }
+
+  gotoIMDB(){
+    let url: string = "http://www.imdb.com/title/" + this.movie.imdb_id;
+    window.open(url,"_blank");
+    console.log(url);
   }
 
 }

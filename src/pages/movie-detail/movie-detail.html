@@ -12,9 +12,50 @@
 
 </ion-header>
 
+<br>
+<ion-content *ngIf="movie" padding>
+  <ion-card>
+    <ion-item>
+      <ion-avatar *ngIf="posterURL" item-start>
+        <img src="{{posterURL}}">
+      </ion-avatar>
+      <h2>{{movie.original_title}}</h2>
+      <p>Released: {{movie.release_date}}</p>
+    </ion-item>
+    <ion-item style="text-align: center">
+      <img *ngIf="backdropURL" src="{{backdropURL}}">
+    </ion-item>
 
-<ion-content *ngIf="posterURL" padding>
 
-  <img src={{posterURL}} alt="">
+    <ion-card-content>
+      <p>{{movie.overview}}</p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col col-4>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>{{movie.vote_average}} / 10</div>
+        </button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button icon-left clear small>
+          <ion-icon name="globe"></ion-icon>
+          <div>{{movie.vote_count}} Votes</div>
+        </button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button icon-left clear small>
+          <ion-icon name="clock"></ion-icon>
+          <div>{{movie.runtime}} min</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card>
+    <button ion-button full (click)=gotoWebsite()>Official Website</button>
+    <button ion-button full (click)="gotoIMDB()" >IMDB</button>
+  </ion-card>
+
 
 </ion-content>

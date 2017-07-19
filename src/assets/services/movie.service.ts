@@ -21,6 +21,7 @@ export class MovieService {
 
   getMovie(movieId: string | number): Observable<any> {
     let url = this.specificMovieUrl + movieId + "?api_key=" + this.apiKey + "&language=en-US&include_adult=false";
+    console.log(url);
     return this.http.get(url)
       .map( (response: Response) => {return response.json()});
   }
@@ -45,7 +46,7 @@ export class MovieService {
   }
 
   buildSearchQuery(list: QueryInfo[]): string {
-    let url = ""
+    let url = "";
     for (let i = 0; i < list.length; i++) {
       if (list[i].key == "page") {
         url += "&page="+list[i].value;
