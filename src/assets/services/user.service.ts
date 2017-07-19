@@ -5,17 +5,21 @@ import {AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable} f
 @Injectable()
 export class UserService {
   abs: string = "";
-  users: FirebaseObjectObservable<any>;
+  users: FirebaseListObservable<any>;
   names: FirebaseListObservable<any>;
 
   constructor(db: AngularFireDatabase) {
+    db.app.auth().signInWithEmailAndPassword("cole2bass@gmail.com", "C0!eP!@y95");
     this.names = db.list("https://matc-ionic-movies.firebaseio.com/names");
-    // let admin = require("firebase-admin")
-
+    this.users = db.list("https://matc-ionic-movies.firebaseio.com/users/users");
   }
 
   addName(newName: string) {
     this.names.push({name: newName});
+  }
+
+  addNewUser(user) {
+    this.users.push(user);
   }
 
   getNames() {
