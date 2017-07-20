@@ -4,6 +4,7 @@ import{User} from '../../models/user';
 import {AngularFireAuth} from "angularfire2/auth/auth";
 import { ToastController } from 'ionic-angular';
 import{LoginPage} from '../login/login';
+import {UserService} from "../../assets/services/user.service";
 
 @Component({
   selector: 'page-register',
@@ -11,17 +12,28 @@ import{LoginPage} from '../login/login';
 })
 export class RegisterPage {
 
-
-
+  showLoginButton: boolean = false;
   user = {} as User;
-  constructor(private afAuth:AngularFireAuth,public navCtrl: NavController, public navParams: NavParams,private toastCtrl: ToastController) {
-  }
+  displayName: string;
+
+  constructor(private afAuth:AngularFireAuth,
+              public navCtrl: NavController,
+              public navParams: NavParams,
+              private toastCtrl: ToastController,
+              private userService: UserService,
+              ) {}
+
+
   async register(user:User){
     try {
-      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
-      this.presentToast1();
-      //alert('Registration has been completed successfully');
-      console.log(result)
+      if (this.displayName){
+        const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+        this.userService.updateProfile(this.displayName);
+        this.presentToast1();
+        this.showLoginButton = true;
+      } else {
+        this.presentToast3();
+      }
 
     }
     catch(e) {
@@ -46,7 +58,7 @@ export class RegisterPage {
 }
 presentToast2() {
   let toast = this.toastCtrl.create({
-    message:'The Email address is already in use',
+    message:'Email in use OR password too short',
     duration: 3000,
     position: 'top'
   });
@@ -57,6 +69,19 @@ presentToast2() {
 
   toast.present();
 }
+  presentToast3() {
+    let toast = this.toastCtrl.create({
+      message:'Please enter a User Name',
+      duration: 2000,
+      position: 'center'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
 
 goToLogin(){
 

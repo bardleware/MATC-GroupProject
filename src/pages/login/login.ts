@@ -8,6 +8,7 @@ import {GooglePlus} from '@ionic-native/google-plus';
 import * as firebase from 'firebase';
 import { AuthService } from "../../providers/auth.service";
 import { ToastController } from 'ionic-angular';
+import {UserService} from "../../assets/services/user.service";
 
 
 @IonicPage()
@@ -17,15 +18,32 @@ import { ToastController } from 'ionic-angular';
 
 })
 export class LoginPage {
-  AngularFireAuth=firebase.auth
-  user = {} as User;
-  constructor(private afAuth:AngularFireAuth,public navCtrl: NavController, public navParams: NavParams,public googlePlus:GooglePlus,
-  private _auth: AuthService,private toastCtrl: ToastController) {
+  AngularFireAuth=firebase.auth;
+  user = {
+    email: "test@test.net",
+    password: "testtest"
+  } as User;
+  uID: any;
+
+  constructor(private afAuth:AngularFireAuth,
+              public navCtrl: NavController,
+              public navParams: NavParams,
+              public googlePlus:GooglePlus,
+              public userServive: UserService,
+              private _auth: AuthService,
+              private toastCtrl: ToastController) {
   }
+
+  ionViewDidLoad(){
+    let users = this.userServive.getNames();
+    console.log(users);
+    // this.login(this.user);
+  }
+
   async login(user:User) {
-    
+
     try {
-      const result=this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
+      const result = this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
       if(result) {
         this.navCtrl.push(UserHomePage);
       }
@@ -33,7 +51,7 @@ export class LoginPage {
 
         window.alert('Go to register');
       }
-      
+
       }
     catch(e) {
      window.alert();
@@ -72,5 +90,5 @@ export class LoginPage {
   toast.present();
 }
 
-    
+
 }
