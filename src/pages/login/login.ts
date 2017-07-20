@@ -7,6 +7,8 @@ import {UserHomePage} from "../user-home/user-home";
 import {GooglePlus} from '@ionic-native/google-plus';
 import * as firebase from 'firebase';
 import { AuthService } from "../../providers/auth.service";
+import { ToastController } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -18,24 +20,34 @@ export class LoginPage {
   AngularFireAuth=firebase.auth
   user = {} as User;
   constructor(private afAuth:AngularFireAuth,public navCtrl: NavController, public navParams: NavParams,public googlePlus:GooglePlus,
-  private _auth: AuthService) {
+  private _auth: AuthService,private toastCtrl: ToastController) {
   }
   async login(user:User) {
+    
     try {
-      //const result=this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
-      this.navCtrl.push(UserHomePage)
-    }
+      const result=this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
+      if(result) {
+        this.navCtrl.push(UserHomePage);
+      }
+      else{
+
+        window.alert('Go to register');
+      }
+      
+      }
     catch(e) {
-      console.error(e)
+     window.alert();
+      this.presentToast();
+      console.error(e.getErrorCode+'Refresh page')
     }
   }
   register(){
     this.navCtrl.push(RegisterPage);
   }
 
-  itemSelected($event, data){
-    this.navCtrl.push(UserHomePage);
-  }
+  //itemSelected($event, data){
+    //this.navCtrl.push(UserHomePage);
+  //}
 
     public signInWithGoogle(): void {
         this._auth.signInWithGoogle().then(() => this.onSignInSuccess());
@@ -46,4 +58,19 @@ export class LoginPage {
 
     }
 
+    presentToast() {
+  let toast = this.toastCtrl.create({
+    message: 'There is no user record corresponding to this identifier..go to Register',
+    duration: 3000,
+    position: 'top'
+  });
+
+  toast.onDidDismiss(() => {
+    console.log('Dismissed toast');
+  });
+
+  toast.present();
+}
+
+    
 }
