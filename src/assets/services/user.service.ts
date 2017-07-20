@@ -23,6 +23,10 @@ export class UserService {
     this.users.push(user);
   }
 
+  getUser(id/*: string | number*/) {
+    return this.db.list("https://matc-ionic-movies.firebaseio.com/users/users/"+id);
+  }
+
   getNames() {
     return this.names;
   }
