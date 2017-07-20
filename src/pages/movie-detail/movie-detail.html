@@ -13,8 +13,8 @@
 </ion-header>
 
 <br>
-<ion-content *ngIf="movie" padding>
-  <ion-card>
+<ion-content  padding>
+  <ion-card *ngIf="movie">
     <ion-item>
       <ion-avatar *ngIf="posterURL" item-start>
         <img src="{{posterURL}}">
@@ -32,19 +32,19 @@
     </ion-card-content>
 
     <ion-row>
-      <ion-col col-4>
+      <ion-col col-3>
         <button ion-button icon-left clear small>
           <ion-icon name="thumbs-up"></ion-icon>
           <div>{{movie.vote_average}} / 10</div>
         </button>
       </ion-col>
-      <ion-col col-4>
+      <ion-col col-3>
         <button ion-button icon-left clear small>
           <ion-icon name="globe"></ion-icon>
           <div>{{movie.vote_count}} Votes</div>
         </button>
       </ion-col>
-      <ion-col col-4>
+      <ion-col col-3>
         <button ion-button icon-left clear small>
           <ion-icon name="clock"></ion-icon>
           <div>{{movie.runtime}} min</div>
@@ -52,7 +52,7 @@
       </ion-col>
     </ion-row>
   </ion-card>
-  <ion-card>
+  <ion-card *ngIf="movie">
     <button ion-button full (click)=gotoWebsite()>Official Website</button>
     <button ion-button full (click)="gotoIMDB()" >IMDB</button>
   </ion-card>

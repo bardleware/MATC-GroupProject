@@ -1,6 +1,7 @@
 
 import {Injectable} from "@angular/core";
 import {AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable} from "angularfire2/database";
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Injectable()
 export class UserService {
@@ -8,7 +9,9 @@ export class UserService {
   users: FirebaseListObservable<any>;
   names: FirebaseListObservable<any>;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase,
+              private afAuth: AngularFireAuth
+              ) {
     db.app.auth().signInWithEmailAndPassword("cole2bass@gmail.com", "C0!eP!@y95");
     this.names = db.list("https://matc-ionic-movies.firebaseio.com/names");
     this.users = db.list("https://matc-ionic-movies.firebaseio.com/users/users");
@@ -21,6 +24,19 @@ export class UserService {
   addNewUser(user) {
     this.db.app.auth().createUserWithEmailAndPassword(user.email, user.password);
     this.users.push(user);
+  }
+
+  updateProfile(displayName: string, photoURL?: string){
+    if (!photoURL) {photoURL = ""}
+
+    this.afAuth.auth.currentUser.updateProfile(({
+      displayName: displayName,
+      photoURL: photoURL
+    }))
+  }
+
+  getCurrentUser(){
+    return this.afAuth.auth.currentUser;
   }
 
   getNames() {

@@ -12,14 +12,13 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
   <ion-searchbar clear type="text" placeholder="Search for a movie" autocomplete="on" [(ngModel)]="myInput">
   </ion-searchbar>
   <button ion-button full (click)="searchForMovie(myInput)">Search</button>
   <br>
-  <button ion-button full (click)="userSelected($event, data)">Search for User</button>
+  <!--<button ion-button full (click)="userSelected($event, data)">Search for User</button>-->
 
   <ion-list>
     <button ion-item *ngFor="let movie of movieList" (click)="itemSelected($event, movie.id)">

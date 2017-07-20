@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {FalseUserService} from "../../assets/services/falseUser.service";
 import {UserService} from "../../assets/services/user.service";
+import {RegisterPage} from "../register/register";
 
 /**
  * Generated class for the HomePage page.
@@ -24,7 +25,7 @@ export class HomePage {
     if(!this.isLoggedin()){
 
       console.log('You are not logged in');
-      this.navCtrl.push(LoginPage);
+      // this.navCtrl.push(LoginPage);
 
     }
   }
@@ -38,6 +39,10 @@ export class HomePage {
 
   itemSelected($event, data){
     this.navCtrl.push(LoginPage);
+  }
+
+  registerSelected($event, data) {
+    this.navCtrl.push(RegisterPage);
   }
 
   isLoggedin() {

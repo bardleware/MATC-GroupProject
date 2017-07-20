@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>userHome</ion-title>
+    <ion-title>Welcome</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,16 +15,14 @@
 
 <ion-content padding>
 
-  <ion-item>
-    <h1>User Home Page</h1>
+  <ion-item *ngIf="user">
+    <h1>{{user.displayName}}</h1>
 
   </ion-item>
   <ion-item style="text-align: center;">
     <img src="assets/images/love.jpeg" alt="">
   </ion-item>
 
-  <button ion-button full (click)="itemSelected($event, data)">My Ratings</button>
-  <button ion-button full (click)="itemSelected($event, data)">Search Users</button>
   <button ion-button full (click)="itemSelected($event, data)">Search Movies</button>
 
 </ion-content>

@@ -4,9 +4,9 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-item>
-    <h1>Login Page</h1>
-  </ion-item>
+  <!--<ion-item>-->
+    <!--<h1>Login Page</h1>-->
+  <!--</ion-item>-->
   <ion-item>
     <ion-label floating>Email Address</ion-label>
     <ion-input type="text" [(ngModel)]="user.email"></ion-input>
@@ -16,18 +16,15 @@
     <ion-input type="password" [(ngModel)]="user.password"></ion-input>
   </ion-item>
   <button ion-button full (click)="login(user)">Login</button>
-  
-  <button ion-button color="light" full (click)="register()">Register</button>
-     <p class="OR">OR</p>
-  <ion-content padding>
 
-    <button ion-button block color="danger" (click)="signInWithGoogle()" >
-      <ion-icon name="logo-googleplus"></ion-icon>
-      Login with Google
+  <!--<button ion-button color="light" full (click)="register()">Register</button>-->
+     <p class="OR" style="text-align: center">OR</p>
+
+    <button ion-button full color="danger" (click)="signInWithGoogle()" >
+      <ion-icon name="logo-googleplus"></ion-icon> Login with Google
     </button>
 
 
-  </ion-content>
 
 </ion-content>
 
