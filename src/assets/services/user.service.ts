@@ -1,6 +1,7 @@
 
 import {Injectable} from "@angular/core";
 import {AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable} from "angularfire2/database";
+import {User} from "../models/user.interface";
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,7 @@ export class UserService {
     this.names.push({name: newName});
   }
 
-  addNewUser(user) {
+  addNewUser(user: User) {
     this.db.app.auth().createUserWithEmailAndPassword(user.email, user.password);
     this.users.push(user);
   }
