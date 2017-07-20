@@ -13,8 +13,8 @@
 </ion-header>
 
 <br>
-<ion-content *ngIf="movie" padding>
-  <ion-card>
+<ion-content  padding>
+  <ion-card *ngIf="movie">
     <ion-item>
       <ion-avatar *ngIf="posterURL" item-start>
         <img src="{{posterURL}}">
@@ -52,7 +52,7 @@
       </ion-col>
     </ion-row>
   </ion-card>
-  <ion-card>
+  <ion-card *ngIf="movie">
     <button ion-button full (click)=gotoWebsite()>Official Website</button>
     <button ion-button full (click)="gotoIMDB()" >IMDB</button>
   </ion-card>
