@@ -1,6 +1,7 @@
 
 import {MiniMovie} from "./movie-mini.interface";
 import {MiniUser} from "./user-mini.interface";
+
 export interface User {
   firstName: string;
   lastName: string;
