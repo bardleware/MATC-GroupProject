@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SearchPage } from "../search/search";
 import { AngularFireAuth } from "angularfire2/auth";
+import { UserService } from "../../assets/services/user.service";
 /**
  * Generated class for the UserHomePage page.
  *
@@ -18,19 +19,16 @@ import { AngularFireAuth } from "angularfire2/auth";
  * on Ionic pages and navigation.
  */
 let UserHomePage = class UserHomePage {
-    constructor(navCtrl, navParams, afAuth) {
+    constructor(navCtrl, navParams, afAuth, userService) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.afAuth = afAuth;
-        this.hasDisplayName = false;
+        this.userService = userService;
     }
     ionViewDidLoad() {
         console.log('ionViewDidLoad UserHomePage');
-        this.user = this.afAuth.auth.currentUser;
-        console.log(this.user.);
-        if (this.user) {
-            this.afAuth.auth.currentUser.updateProfile({ displayName: "Test" });
-        }
+        this.user = this.userService.getCurrentUser();
+        console.log(this.user.displayName);
     }
     itemSelected() {
         this.navCtrl.push(SearchPage);
@@ -44,7 +42,8 @@ UserHomePage = __decorate([
     }),
     __metadata("design:paramtypes", [NavController,
         NavParams,
-        AngularFireAuth])
+        AngularFireAuth,
+        UserService])
 ], UserHomePage);
 export { UserHomePage };
 //# sourceMappingURL=user-home.js.map

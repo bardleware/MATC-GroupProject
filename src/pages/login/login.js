@@ -43,7 +43,7 @@ let LoginPage = class LoginPage {
     ionViewDidLoad() {
         let users = this.userServive.getNames();
         console.log(users);
-        this.login(this.user);
+        // this.login(this.user);
     }
     login(user) {
         return __awaiter(this, void 0, void 0, function* () {

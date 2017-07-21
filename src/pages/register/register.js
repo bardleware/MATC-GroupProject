@@ -20,23 +20,29 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth/auth";
 import { ToastController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { UserService } from "../../assets/services/user.service";
 let RegisterPage = class RegisterPage {
-    constructor(afAuth, navCtrl, navParams, toastCtrl) {
+    constructor(afAuth, navCtrl, navParams, toastCtrl, userService) {
         this.afAuth = afAuth;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.toastCtrl = toastCtrl;
+        this.userService = userService;
         this.showLoginButton = false;
-        this.user = {};
     }
     register(user) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
-                this.presentToast1();
-                this.showLoginButton = true;
-                //alert('Registration has been completed successfully');
-                console.log(result);
+                if (this.displayName) {
+                    const result = yield this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+                    this.userService.updateProfile(user.displayName);
+                    this.userService;
+                    this.presentToast1();
+                    this.showLoginButton = true;
+                }
+                else {
+                    this.presentToast3();
+                }
             }
             catch (e) {
                 this.presentToast2();
@@ -57,9 +63,20 @@ let RegisterPage = class RegisterPage {
     }
     presentToast2() {
         let toast = this.toastCtrl.create({
-            message: 'Email already in use OR password too short',
+            message: 'Email in use OR password too short',
             duration: 3000,
             position: 'top'
+        });
+        toast.onDidDismiss(() => {
+            console.log('Dismissed toast');
+        });
+        toast.present();
+    }
+    presentToast3() {
+        let toast = this.toastCtrl.create({
+            message: 'Please enter a User Name',
+            duration: 2000,
+            position: 'center'
         });
         toast.onDidDismiss(() => {
             console.log('Dismissed toast');
@@ -78,7 +95,8 @@ RegisterPage = __decorate([
     __metadata("design:paramtypes", [AngularFireAuth,
         NavController,
         NavParams,
-        ToastController])
+        ToastController,
+        UserService])
 ], RegisterPage);
 export { RegisterPage };
 //# sourceMappingURL=register.js.map

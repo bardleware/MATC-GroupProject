@@ -5,6 +5,7 @@ import {MiniUser} from "./user-mini.interface";
 export interface User {
   firstName: string;
   lastName: string;
+  displayName: string;
   password: string;
   userId: string;
   gender: string;

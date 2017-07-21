@@ -31,8 +31,7 @@ export class LoginPage {
               public googlePlus:GooglePlus,
               public userServive: UserService,
               private _auth: AuthService,
-              private toastCtrl: ToastController) {
-  }
+              private toastCtrl: ToastController) {}
 
   ionViewDidLoad(){
     let users = this.userServive.getNames();

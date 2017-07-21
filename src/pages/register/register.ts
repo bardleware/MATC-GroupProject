@@ -13,7 +13,7 @@ import {UserService} from "../../assets/services/user.service";
 export class RegisterPage {
 
   showLoginButton: boolean = false;
-  user = {} as User;
+  user: User;
   displayName: string;
 
   constructor(private afAuth:AngularFireAuth,
@@ -23,8 +23,7 @@ export class RegisterPage {
               private userService: UserService,
               ) {}
 
-
-  async register(user:User){
+  async register(user: User){
     try {
       if (this.displayName){
         const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
@@ -83,9 +82,8 @@ presentToast2() {
     toast.present();
   }
 
-goToLogin(){
-
-  this.navCtrl.push(LoginPage);
-}
+  goToLogin(){
+    this.navCtrl.push(LoginPage);
+  }
 
 }
