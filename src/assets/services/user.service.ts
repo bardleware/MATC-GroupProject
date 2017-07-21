@@ -1,6 +1,7 @@
 
 import {Injectable} from "@angular/core";
 import {AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable} from "angularfire2/database";
+import {User} from "../models/user.interface";
 import {AngularFireAuth} from "angularfire2/auth";
 
 @Injectable()
@@ -21,11 +22,16 @@ export class UserService {
     this.names.push({name: newName});
   }
 
-  addNewUser(user) {
+  addNewUser(user: User) {
     this.db.app.auth().createUserWithEmailAndPassword(user.email, user.password);
     this.users.push(user);
   }
 
+
+  getUser(id/*: string | number*/) {
+    return this.db.list("https://matc-ionic-movies.firebaseio.com/users/users/"+id);
+  }
+  
   updateProfile(displayName: string, photoURL?: string){
     if (!photoURL) {photoURL = ""}
 
