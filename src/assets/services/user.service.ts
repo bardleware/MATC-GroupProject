@@ -14,7 +14,7 @@ export class UserService {
   constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {
     db.app.auth().signInWithEmailAndPassword("cole2bass@gmail.com", "C0!eP!@y95");
     this.names = db.list("https://matc-ionic-movies.firebaseio.com/names");
-    this.users = db.list("https://matc-ionic-movies.firebaseio.com/users/users");
+    this.users = db.list("https://matc-ionic-movies.firebaseio.com/users/");
   }
 
   addName(newName: string) {
@@ -31,7 +31,12 @@ export class UserService {
   }
 
   getUser(id/*: string | number*/) {
-    return this.db.list("https://matc-ionic-movies.firebaseio.com/users/users/"+id);
+
+    // return this.db.list("https://matc-ionic-movies.firebaseio.com/users/users/"+id);
+  }
+
+  getUsers() {
+    return this.users;
   }
 
   updateProfile(displayName: string, photoURL?: string){

@@ -19,9 +19,9 @@ export class UserProfile implements User {
   pic1: string;
   pic2: string;
 
-  constructor(userId: string, private auth: AngularFireDatabase) {
-    this.userId = userId;
-  }
+  private auth: AngularFireDatabase
+
+  constructor() {}
 
   updateUser(user: User) {
     this.firstName = user.firstName;
