@@ -26,6 +26,7 @@ export class UserProfile implements User {
   updateUser(user: User) {
     this.firstName = user.firstName;
     this.lastName = user.lastName;
+    this.userId = user.userId;
     this.password = user.password;
     this.gender = user.gender;
     this.email = user.email;
