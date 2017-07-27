@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
+import {AngularFireAuth} from "angularfire2/auth";
+import {MovieDetailPage} from "../movie-detail/movie-detail";
 
 /**
  * Generated class for the MyMoviesPage page.
@@ -14,11 +17,28 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MyMoviesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  movieList: FirebaseListObservable<any>;
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private db: AngularFireDatabase,
+              private afAuth: AngularFireAuth
+
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyMoviesPage');
+    this.fetchMovieList();
+  }
+
+  itemSelected(event, movieID){
+    this.navCtrl.push(MovieDetailPage, movieID);
+  }
+
+  fetchMovieList(){
+    let id = this.afAuth.auth.currentUser.uid;
+    this.movieList = this.db.list("userdetail/" + id + "/movies")
   }
 
 }

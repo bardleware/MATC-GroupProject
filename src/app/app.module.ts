@@ -23,6 +23,9 @@ import { AuthService } from '../providers/auth.service';
 import{GooglePlus} from '@ionic-native/google-plus';
 import {MovieService} from "../assets/services/movie.service";
 import {UserService} from "../assets/services/user.service";
+import {MyMoviesPage} from "../pages/my-movies/my-movies";
+import {FindFriendsPage} from "../pages/find-friends/find-friends";
+import {FriendsListPage} from "../pages/friends-list/friends-list";
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import {UserService} from "../assets/services/user.service";
     SearchPage,
     UserDetailPage,
     UserHomePage,
-    RegisterPage
+    RegisterPage,
+    MyMoviesPage,
+    FindFriendsPage,
+    FriendsListPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +60,10 @@ import {UserService} from "../assets/services/user.service";
     SearchPage,
     UserDetailPage,
     UserHomePage,
-    RegisterPage
+    RegisterPage,
+    MyMoviesPage,
+    FindFriendsPage,
+    FriendsListPage
   ],
   providers: [
     StatusBar,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from "angularfire2/database";
 
 /**
  * Generated class for the UserDetailPage page.
@@ -14,10 +15,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class UserDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  uid: any;
+  user: FirebaseObjectObservable<any>;
+  displayName: any;
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private db: AngularFireDatabase
+              ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserDetailPage');
+    this.uid = this.navParams.data;
+
+
+
   }
 }
