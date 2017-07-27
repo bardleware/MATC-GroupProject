@@ -12,6 +12,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SearchPage } from "../search/search";
 import { AngularFireAuth } from "angularfire2/auth";
 import { UserService } from "../../assets/services/user.service";
+import { AngularFireDatabase } from "angularfire2/database";
 /**
  * Generated class for the UserHomePage page.
  *
@@ -19,16 +20,20 @@ import { UserService } from "../../assets/services/user.service";
  * on Ionic pages and navigation.
  */
 let UserHomePage = class UserHomePage {
-    constructor(navCtrl, navParams, afAuth, userService) {
+    constructor(navCtrl, navParams, afAuth, userService, db) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.afAuth = afAuth;
         this.userService = userService;
+        this.db = db;
     }
     ionViewDidLoad() {
         console.log('ionViewDidLoad UserHomePage');
         this.user = this.userService.getCurrentUser();
-        console.log(this.user.displayName);
+        this.currentUser = this.userService.getUser(this.user.uid);
+        console.log(this.currentUser);
+        let userObject = this.db.object("https://matc-ionic-movies.firebaseio.com/userdetail/" + this.user.uid);
+        console.log(userObject);
     }
     itemSelected() {
         this.navCtrl.push(SearchPage);
@@ -43,7 +48,8 @@ UserHomePage = __decorate([
     __metadata("design:paramtypes", [NavController,
         NavParams,
         AngularFireAuth,
-        UserService])
+        UserService,
+        AngularFireDatabase])
 ], UserHomePage);
 export { UserHomePage };
 //# sourceMappingURL=user-home.js.map

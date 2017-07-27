@@ -29,14 +29,21 @@ let RegisterPage = class RegisterPage {
         this.toastCtrl = toastCtrl;
         this.userService = userService;
         this.showLoginButton = false;
+        this.user = {};
+    }
+    ionViewDidLoad() {
+        this.user.displayName = "Howdy Thar";
+        this.user.email = "test@test.com";
+        this.user.password = "testtest";
     }
     register(user) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                if (this.displayName) {
+                if (this.user.displayName) {
                     const result = yield this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
-                    this.userService.updateProfile(user.displayName);
-                    this.userService;
+                    this.userService.updateProfile(this.user.displayName);
+                    this.userService.addNewUserDetails(result.uid, this.user.displayName);
+                    // this.userService.addNewUser(user);
                     this.presentToast1();
                     this.showLoginButton = true;
                 }

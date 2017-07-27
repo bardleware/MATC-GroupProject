@@ -53,6 +53,8 @@
     </ion-row>
   </ion-card>
   <ion-card *ngIf="movie">
+    <h3 *ngIf="movieAdded" style="text-align: center"> Movie Added to your Favorites! </h3>
+    <button *ngIf="!movieAdded" ion-button full (click)=addMovie()>Add to My Favorites</button>
     <button ion-button full (click)=gotoWebsite()>Official Website</button>
     <button ion-button full (click)="gotoIMDB()" >IMDB</button>
   </ion-card>

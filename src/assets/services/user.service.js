@@ -11,19 +11,31 @@ import { Injectable } from "@angular/core";
 import { AngularFireDatabase } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
 let UserService = class UserService {
+    // userDetails: FirebaseObjectObservableObservable;
     constructor(db, auth) {
         this.db = db;
         this.auth = auth;
         this.abs = "";
-        db.app.auth().signInWithEmailAndPassword("cole2bass@gmail.com", "C0!eP!@y95");
+        // db.app.auth().signInWithEmailAndPassword("cole2bass@gmail.com", "C0!eP!@y95");
         this.names = db.list("https://matc-ionic-movies.firebaseio.com/names");
-        this.users = db.list("https://matc-ionic-movies.firebaseio.com/users/users");
+        this.users = db.list("https://matc-ionic-movies.firebaseio.com/users");
     }
     addName(newName) {
         this.names.push({ name: newName });
     }
     addNewUser(user) {
-        this.users.push(user);
+        // this.auth.auth.createUserWithEmailAndPassword(user.email, user.password);
+        this.users.push(user); // add user users list
+    }
+    addNewUserDetails(uid, name) {
+        this.db.object("https://matc-ionic-movies.firebaseio.com/userdetail/" + uid).
+            set({
+            dispayName: name,
+            favoriteMovies: [76341, 9659],
+            friends: [1234, 5678]
+        });
+    }
+    addFriend(id, user) {
     }
     getUser(id /*: string | number*/) {
         return this.db.list("https://matc-ionic-movies.firebaseio.com/users/users/" + id);
@@ -59,7 +71,8 @@ let UserService = class UserService {
 };
 UserService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [AngularFireDatabase, AngularFireAuth])
+    __metadata("design:paramtypes", [AngularFireDatabase,
+        AngularFireAuth])
 ], UserService);
 export { UserService };
 //# sourceMappingURL=user.service.js.map

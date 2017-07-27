@@ -35,10 +35,8 @@ let LoginPage = class LoginPage {
         this._auth = _auth;
         this.toastCtrl = toastCtrl;
         this.AngularFireAuth = firebase.auth;
-        this.user = {
-            email: "test@test.net",
-            password: "testtest"
-        };
+        this.email = "test@test.com";
+        this.password = "testtest";
     }
     ionViewDidLoad() {
         let users = this.userServive.getNames();
@@ -48,8 +46,11 @@ let LoginPage = class LoginPage {
     login(user) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
+                const result = this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password);
                 if (result) {
+                    // let user = this.afAuth.auth.currentUser;
+                    // console.log(user);
+                    // this.userServive.addNewUserDetails(user);
                     this.navCtrl.push(UserHomePage);
                 }
                 else {

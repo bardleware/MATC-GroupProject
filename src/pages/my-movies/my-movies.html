@@ -7,12 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>MyMovies</ion-title>
+    <ion-title>My Movies</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+  <ion-list *ngIf="movieList">
+  <button ion-item *ngFor="let movie of movieList | async" (click)="itemSelected($event, movie.id)">
+    {{ movie.title }}
+  </button>
+</ion-list>
 
 </ion-content>

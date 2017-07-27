@@ -13,13 +13,13 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding *ngIf="displayName">
+  <br><br><br>
   <ion-item>
     <ion-avatar item-start>
       <img src="assets/images/BruceLee.jpg">
     </ion-avatar>
-    <h2>Bruce Lee</h2>
-    <p>55 Movie Ratings</p>
+    <h2>{{displayName}}</h2>
   </ion-item>
 
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula rhoncus eros et dignissim. Quisque id pellentesque nibh. Suspendisse faucibus varius odio, at porttitor est faucibus eget.</p>
