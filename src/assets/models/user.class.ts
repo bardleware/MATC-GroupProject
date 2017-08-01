@@ -13,14 +13,14 @@ export class UserProfile implements User {
   recommendedMovies: MiniMovie[];
   recommendedByFriends: MiniMovie[];
 
-  constructor(userId: string, private auth: AngularFireDatabase) {
-    this.userId = userId;
-  }
+  private auth: AngularFireDatabase
+
+  constructor() {}
 
   updateUser(user: User) {
-    // this.firstName = user.firstName;
-    // this.lastName = user.lastName;
+
     this.displayName = user.displayName;
+
     this.password = user.password;
     // this.gender = user.gender;
     this.email = user.email;
