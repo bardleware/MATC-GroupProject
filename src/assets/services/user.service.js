@@ -9,28 +9,70 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireAuth } from "angularfire2/auth";
 let UserService = class UserService {
-    constructor(db) {
+    // userDetails: FirebaseObjectObservableObservable;
+    constructor(db, auth) {
         this.db = db;
+        this.auth = auth;
         this.abs = "";
-        db.app.auth().signInWithEmailAndPassword("cole2bass@gmail.com", "C0!eP!@y95");
+        // db.app.auth().signInWithEmailAndPassword("cole2bass@gmail.com", "C0!eP!@y95");
         this.names = db.list("https://matc-ionic-movies.firebaseio.com/names");
-        this.users = db.list("https://matc-ionic-movies.firebaseio.com/users/users");
+        this.users = db.list("https://matc-ionic-movies.firebaseio.com/users");
     }
     addName(newName) {
         this.names.push({ name: newName });
     }
     addNewUser(user) {
-        this.db.app.auth().createUserWithEmailAndPassword(user.email, user.password);
-        this.users.push(user);
+        // this.auth.auth.createUserWithEmailAndPassword(user.email, user.password);
+        this.users.push(user); // add user users list
+    }
+    addNewUserDetails(uid, name) {
+        this.db.object("https://matc-ionic-movies.firebaseio.com/userdetail/" + uid).
+            set({
+            dispayName: name,
+            favoriteMovies: [76341, 9659],
+            friends: [1234, 5678]
+        });
+    }
+    addFriend(id, user) {
+    }
+    getUser(id /*: string | number*/) {
+        return this.db.list("https://matc-ionic-movies.firebaseio.com/users/users/" + id);
+    }
+    updateProfile(displayName, photoURL) {
+        if (!photoURL) {
+            photoURL = "";
+        }
+        this.auth.auth.currentUser.updateProfile(({
+            displayName: displayName,
+            photoURL: photoURL
+        }));
+    }
+    getCurrentUser() {
+        return this.auth.auth.currentUser;
     }
     getNames() {
         return this.names;
     }
+    getDetails() {
+        let user = this.auth.auth.currentUser;
+        return {
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL,
+            emailVerified: user.emailVerified,
+            uid: user.uid
+        };
+    }
+    login(email, password) {
+        this.auth.auth.signInWithEmailAndPassword(email, password);
+    }
 };
 UserService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [AngularFireDatabase])
+    __metadata("design:paramtypes", [AngularFireDatabase,
+        AngularFireAuth])
 ], UserService);
 export { UserService };
 //# sourceMappingURL=user.service.js.map

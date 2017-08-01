@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MovieService} from "../../assets/services/movie.service";
+import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFireDatabase} from "angularfire2/database";
 
 /**
  * Generated class for the MovieDetailPage page.
@@ -18,11 +20,14 @@ export class MovieDetailPage {
   public posterURL: string;
   public backdropURL: string;
   public movie: any;
+  private movieAdded: boolean = false;
 
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public movieService: MovieService
+              public movieService: MovieService,
+              private afAuth: AngularFireAuth,
+              private db: AngularFireDatabase
   ) {
   }
 
@@ -47,6 +52,16 @@ export class MovieDetailPage {
     let url: string = "http://www.imdb.com/title/" + this.movie.imdb_id;
     window.open(url,"_blank");
     console.log(url);
+  }
+
+  addMovie(){
+    let movieID = this.movie.id;
+    let id = this.afAuth.auth.currentUser.uid;
+    let movieList = this.db.list("userdetail/" + id + "/movies");
+    movieList.push(this.movie);
+    this.movieAdded = true;
+
+
   }
 
 }

@@ -5,6 +5,9 @@ import {User} from "firebase/app";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireModule} from "angularfire2";
 import {UserService} from "../../assets/services/user.service";
+import {AngularFireDatabase} from "angularfire2/database";
+import {MyMoviesPage} from "../my-movies/my-movies";
+import {FindFriendsPage} from "../find-friends/find-friends";
 
 /**
  * Generated class for the UserHomePage page.
@@ -19,24 +22,30 @@ import {UserService} from "../../assets/services/user.service";
 })
 export class UserHomePage {
   user: User;
+  uID: any;
+  displayName: any;
 
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public afAuth: AngularFireAuth,
-              public userService: UserService
-  ) {
-  }
+              public userService: UserService,
+              private db: AngularFireDatabase,
+
+  ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserHomePage');
-
-    this.user = this.userService.getCurrentUser();
-    console.log(this.user.displayName);
-
+    this.displayName = this.afAuth.auth.currentUser.displayName;
   }
 
+  favoriteMovies(){
+    this.navCtrl.push(MyMoviesPage);
+  }
 
+  findFriends(){
+    this.navCtrl.push(FindFriendsPage);
+  }
 
   itemSelected(){
     this.navCtrl.push(SearchPage);
